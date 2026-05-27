@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shade Deep — Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ed;
+    --cream: #ede9e1;
+    --gold: #c9a84c;
+    --gold-light: #e8d08a;
+    --muted: #8a8478;
+    --border: rgba(201,168,76,0.2);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 0.5px solid var(--border);
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+  .nav-links { display: flex; gap: 32px; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 72px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 30%, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 120px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    max-width: 780px;
+    margin-bottom: 32px;
+  }
+  .hero-headline em {
+    color: var(--gold);
+    font-style: normal;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+  .cta-row { display: flex; gap: 16px; align-items: center; }
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-block;
+    padding: 14px 32px;
+    border: 0.5px solid var(--gold);
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(201,168,76,0.08); }
+  .hero-number {
+    position: absolute; right: 48px; bottom: 72px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 200px;
+    line-height: 1;
+    color: rgba(201,168,76,0.04);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* SECTIONS */
+  section { padding: 96px 48px; border-bottom: 0.5px solid var(--border); }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .section-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 6vw, 72px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+  .section-sub {
+    color: var(--muted);
+    max-width: 520px;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* WHO WE SERVE */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 56px; }
+  .client-card {
+    padding: 48px 40px;
+    border: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .client-card:hover { border-color: var(--gold); }
+  .client-card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(201,168,76,0.07);
+    position: absolute;
+    top: 16px; right: 24px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .client-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .client-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 320px;
+  }
+  .client-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+  }
+  .tag {
+    padding: 6px 14px;
+    border: 0.5px solid var(--border);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* SERVICES */
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-top: 56px; }
+  .service-card {
+    padding: 40px 32px;
+    border: 0.5px solid var(--border);
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.03);
+  }
+  .service-icon {
+    width: 40px; height: 40px;
+    border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    color: var(--gold);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+  }
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+  .service-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .service-includes {
+    list-style: none;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .service-includes li { padding: 6px 0; border-top: 0.5px solid var(--border); }
+  .service-includes li::before { content: "— "; color: var(--gold); }
+
+  /* MAGAZINE */
+  .magazine-section {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .magazine-mockup {
+    aspect-ratio: 3/4;
+    border: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+  .mag-cover-art {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 60%);
+  }
+  .mag-title {
+    position: absolute; top: 32px; left: 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .mag-issue {
+    position: absolute; top: 40px; right: 32px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .mag-feature {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 32px;
+    background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, transparent 100%);
+  }
+  .mag-feature-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .mag-feature-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .mag-feature-desc { font-size: 12px; color: var(--muted); }
+  .mag-divider { width: 40px; height: 0.5px; background: var(--gold); margin: 20px 0; }
+  .magazine-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 60px);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .magazine-text p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+  .mag-cta-list { list-style: none; margin: 24px 0; }
+  .mag-cta-list li {
+    padding: 12px 0;
+    border-bottom: 0.5px solid var(--border);
+    font-size: 13px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .mag-cta-list li::before { content: "→"; color: var(--gold); flex-shrink: 0; }
+
+  /* PROCESS */
+  .process-steps { margin-top: 56px; }
+  .process-step {
+    display: grid; grid-template-columns: 80px 1fr; gap: 32px;
+    padding: 32px 0; border-top: 0.5px solid var(--border);
+    align-items: start;
+  }
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: rgba(201,168,76,0.25);
+    line-height: 1;
+    text-align: right;
+  }
+  .step-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .step-content p { color: var(--muted); font-size: 13px; line-height: 1.7; max-width: 500px; }
+
+  /* FOOTER CTA */
+  .footer-cta {
+    padding: 96px 48px;
+    text-align: center;
+    border-bottom: none;
+  }
+  .footer-cta h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    margin-bottom: 32px;
+  }
+  .footer-cta h2 em { color: var(--gold); font-style: normal; }
+  .footer-cta p { color: var(--muted); margin-bottom: 40px; }
+  footer {
+    padding: 24px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 0.5px solid var(--border);
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 56px; }
+    section { padding: 64px 20px; }
+    .two-col, .services-grid, .magazine-section { grid-template-columns: 1fr; }
+    .hero-number { display: none; }
+    footer { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wordmark">Shade Deep</div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#magazine">Magazine</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Work with us</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-tag">Creative Media &amp; Strategy</p>
+  <h1 class="hero-headline">We Build <em>Brands</em> That Demand Attention</h1>
+  <p class="hero-sub">Shade Deep is a digital media firm for artists and self-directed entrepreneurs who are serious about their presence.</p>
+  <div class="cta-row">
+    <a href="#contact" class="btn-primary">Work with us</a>
+    <a href="#magazine" class="btn-ghost">Read the magazine</a>
+  </div>
+  <div class="hero-number">SD</div>
+</div>
+
+<section id="who">
+  <p class="label">Who we serve</p>
+  <h2 class="section-heading">Built for the Builders</h2>
+  <p class="section-sub">We work with two kinds of people — those creating something in culture, and those building something in commerce. Often the same person.</p>
+  <div class="two-col">
+    <div class="client-card">
+      <div class="client-card-num">01</div>
+      <h3>Artists &amp; Creatives</h3>
+      <p>Musicians, visual artists, designers, and creators who need their online presence to match the quality of their work. Your brand should open doors, not close them.</p>
+      <div class="client-tags">
+        <span class="tag">Musicians</span>
+        <span class="tag">Visual artists</span>
+        <span class="tag">Designers</span>
+        <span class="tag">Filmmakers</span>
+        <span class="tag">Performers</span>
+      </div>
+    </div>
+    <div class="client-card">
+      <div class="client-card-num">02</div>
+      <h3>Self-Directed Entrepreneurs</h3>
+      <p>Founders, coaches, realtors, and independent operators who are building personal brands alongside their businesses. You are the product — we make sure the world knows it.</p>
+      <div class="client-tags">
+        <span class="tag">Founders</span>
+        <span class="tag">Coaches</span>
+        <span class="tag">Realtors</span>
+        <span class="tag">Consultants</span>
+        <span class="tag">Operators</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <p class="label">What we do</p>
+  <h2 class="section-heading">Three Ways We Work</h2>
+  <p class="section-sub">Every engagement is built around one outcome: making your brand impossible to ignore.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">01</div>
+      <h3>Social Strategy &amp; Management</h3>
+      <p>We handle the full architecture of your social presence — strategy, content creation, publishing, and growth — so you can focus on what you actually do.</p>
+      <ul class="service-includes">
+        <li>Platform strategy (TikTok, IG, YouTube)</li>
+        <li>Content calendar &amp; creation</li>
+        <li>Copywriting &amp; creative direction</li>
+        <li>Monthly analytics &amp; reporting</li>
+        <li>Community management</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">02</div>
+      <h3>Brand Video Production</h3>
+      <p>Cinematic, theme-driven video content that tells your story and builds your brand equity over time. Not just content — assets.</p>
+      <ul class="service-includes">
+        <li>Brand films &amp; reels</li>
+        <li>Concept development</li>
+        <li>Shoot direction &amp; production</li>
+        <li>Post-production &amp; editing</li>
+        <li>Platform-optimized delivery</li>
+      </ul>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">03</div>
+      <h3>Magazine Feature &amp; PR</h3>
+      <p>Get featured in Shade Deep Magazine — a platform for disruptors in creative and entrepreneurship spaces. We tell your story to an audience that's already paying attention.</p>
+      <ul class="service-includes">
+        <li>Editorial feature in Shade Deep Magazine</li>
+        <li>Professional photography direction</li>
+        <li>Distribution across all SD channels</li>
+        <li>Content assets for your own platforms</li>
+        <li>Community introduction &amp; positioning</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="magazine">
+  <div class="magazine-section">
+    <div class="magazine-mockup">
+      <div class="mag-cover-art"></div>
+      <div class="mag-title">SHADE<br>DEEP</div>
+      <div class="mag-issue">Issue 001 · 2024</div>
+      <div class="mag-feature">
+        <p class="mag-feature-label">Featured disruptor</p>
+        <p class="mag-feature-name">The Ones<br>Who Move First</p>
+        <p class="mag-feature-desc">Stories from the edge of art, commerce, and culture</p>
+      </div>
+    </div>
+    <div class="magazine-text">
+      <p class="label">Shade Deep Magazine</p>
+      <h2>Where Disruptors Get Their Story Told</h2>
+      <div class="mag-divider"></div>
+      <p>The magazine isn't just editorial — it's infrastructure. Every feature builds the community, creates content, and drives demand to be associated with Shade Deep.</p>
+      <p>We feature artists and entrepreneurs who are doing something real. Not the loudest voices — the most interesting ones.</p>
+      <ul class="mag-cta-list">
+        <li>Establishes you as a thought leader in your space</li>
+        <li>Distributed across TikTok, Instagram, and YouTube</li>
+        <li>Builds association with other disruptors and creatives</li>
+        <li>Creates permanent content assets for your brand</li>
+      </ul>
+      <a href="#contact" class="btn-ghost">Apply to be featured</a>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <p class="label">How it works</p>
+  <h2 class="section-heading">From Introduction to Impact</h2>
+  <p class="section-sub">We move deliberately. Every client engagement starts with understanding before building.</p>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Discovery call</h3>
+        <p>We learn your business, your goals, your audience, and where your brand currently stands. No templates — we start from your actual situation.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Strategy &amp; positioning</h3>
+        <p>We build a tailored strategy: which platforms, what content approach, what story you need to be telling, and how to make your brand impossible to ignore.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Creation &amp; execution</h3>
+        <p>We build, create, and publish. You stay in your zone — we stay in ours. Weekly check-ins keep you informed without consuming your time.</p>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-content">
+        <h3>Grow &amp; iterate</h3>
+        <p>Monthly reporting, real conversations about what's working, and continuous refinement. This is a partnership, not a subscription.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="footer-cta">
+  <h2>Ready to Build<br>Something <em>Real?</em></h2>
+  <p>Applications open for Q3 2025. We work with a limited number of clients at a time.</p>
+  <a href="mailto:hello@shadedeep.com" class="btn-primary">Start the conversation</a>
+</section>
+
+<footer>
+  <div class="wordmark">Shade Deep</div>
+  <span>© 2025 Shade Deep Media. All rights reserved.</span>
+  <div style="display:flex;gap:20px;">
+    <a href="https://www.tiktok.com/@shadedeep_" style="color:var(--muted);text-decoration:none;font-size:12px;">TikTok</a>
+    <a href="https://www.instagram.com/shadedeepmedia" style="color:var(--muted);text-decoration:none;font-size:12px;">Instagram</a>
+    <a href="https://youtube.com/@estheratere" style="color:var(--muted);text-decoration:none;font-size:12px;">YouTube</a>
+  </div>
+</footer>
+
+</body>
+</html>
