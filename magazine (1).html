@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shade Deep Magazine</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ed;
+    --cream: #ede9e1;
+    --gold: #c9a84c;
+    --gold-light: #e8d08a;
+    --muted: #8a8478;
+    --border: rgba(201,168,76,0.18);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 0.5px solid var(--border);
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 0.12em; color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  nav a {
+    color: var(--muted); text-decoration: none;
+    font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--white); }
+  .nav-active { color: var(--gold) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 72px;
+    position: relative; overflow: hidden;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 30%, rgba(201,168,76,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-ticker {
+    position: absolute; top: 50%; left: 0; right: 0;
+    transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 220px; line-height: 1;
+    color: rgba(201,168,76,0.03);
+    white-space: nowrap; pointer-events: none; user-select: none;
+    letter-spacing: 0.08em;
+    animation: ticker 18s linear infinite;
+  }
+  @keyframes ticker { from { transform: translateY(-50%) translateX(0); } to { transform: translateY(-50%) translateX(-50%); } }
+  .hero-label {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+    position: relative;
+  }
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 9vw, 110px);
+    line-height: 0.92; letter-spacing: 0.02em;
+    max-width: 700px; margin-bottom: 28px;
+    position: relative;
+  }
+  .hero-headline em { color: var(--gold); font-style: normal; }
+  .hero-sub {
+    font-size: 15px; color: var(--muted);
+    max-width: 460px; margin-bottom: 40px;
+    font-weight: 300; line-height: 1.7;
+    position: relative;
+  }
+  .hero-cta-row { display: flex; gap: 16px; align-items: center; position: relative; }
+  .btn-primary {
+    display: inline-block; padding: 14px 32px;
+    background: var(--gold); color: var(--black);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-block; padding: 14px 32px;
+    border: 0.5px solid var(--gold); color: var(--gold);
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(201,168,76,0.08); }
+  .hero-scroll {
+    position: absolute; right: 48px; bottom: 72px;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .hero-scroll span {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 0.5px; height: 48px; background: var(--border);
+    animation: scrollpulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollpulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* MISSION STRIP */
+  .mission {
+    padding: 56px 48px;
+    border-bottom: 0.5px solid var(--border);
+    display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center;
+  }
+  .mission-label {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+  }
+  .mission-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    letter-spacing: 0.02em; line-height: 1.2; color: var(--white);
+  }
+  .mission-text em { color: var(--gold); font-style: normal; }
+
+  /* ISSUES */
+  .issues-section { padding: 96px 48px; border-bottom: 0.5px solid var(--border); }
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .section-heading {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    line-height: 1; letter-spacing: 0.02em;
+  }
+  .issues-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  /* ISSUE CARD */
+  .issue-card {
+    position: relative; overflow: hidden;
+    border: 0.5px solid var(--border);
+    transition: border-color 0.3s;
+    cursor: pointer;
+  }
+  .issue-card:hover { border-color: var(--gold); }
+  .issue-card:hover .issue-cover-overlay { opacity: 1; }
+  .issue-card:hover .issue-read-btn { opacity: 1; transform: translateY(0); }
+  .issue-cover {
+    aspect-ratio: 3/4;
+    position: relative; overflow: hidden;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Generative cover art */
+  .cover-art {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cover-art-1 {
+    background:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(201,168,76,0.03) 40px,
+        rgba(201,168,76,0.03) 41px
+      ),
+      radial-gradient(ellipse 60% 80% at 40% 40%, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+  .cover-art-2 {
+    background:
+      repeating-linear-gradient(
+        -30deg,
+        transparent,
+        transparent 50px,
+        rgba(201,168,76,0.03) 50px,
+        rgba(201,168,76,0.03) 51px
+      ),
+      radial-gradient(ellipse 70% 60% at 60% 60%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  }
+  .cover-mag-title {
+    position: absolute; top: 28px; left: 28px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 0.1em;
+    color: var(--gold); line-height: 1;
+    z-index: 2;
+  }
+  .cover-issue-num {
+    position: absolute; top: 34px; right: 28px;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted); z-index: 2;
+  }
+  .cover-center-text {
+    position: relative; z-index: 2; text-align: center; padding: 0 28px;
+  }
+  .cover-theme {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; line-height: 0.95;
+    letter-spacing: 0.03em; color: rgba(245,242,237,0.12);
+  }
+  .cover-feature-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 0.06em;
+    color: rgba(245,242,237,0.5); margin-top: 12px;
+  }
+  .issue-cover-overlay {
+    position: absolute; inset: 0;
+    background: rgba(10,10,10,0.6);
+    opacity: 0; transition: opacity 0.3s;
+    z-index: 3;
+  }
+  .issue-read-btn {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, calc(-50% + 12px));
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    z-index: 4;
+    padding: 14px 28px;
+    background: var(--gold); color: var(--black);
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; white-space: nowrap;
+  }
+  .issue-read-btn:hover { background: var(--gold-light); }
+
+  .issue-info { padding: 28px 28px 32px; }
+  .issue-meta {
+    display: flex; gap: 16px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .issue-num-tag {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); padding: 4px 10px;
+    border: 0.5px solid var(--border);
+  }
+  .issue-date {
+    font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+  }
+  .issue-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 0.03em;
+    color: var(--white); margin-bottom: 10px; line-height: 1;
+  }
+  .issue-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .issue-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .issue-tag {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); padding: 4px 10px;
+    border: 0.5px solid var(--border);
+  }
+
+  /* COMING SOON card */
+  .issue-card-upcoming {
+    border: 0.5px dashed rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 500px;
+    transition: border-color 0.3s;
+  }
+  .issue-card-upcoming:hover { border-color: rgba(201,168,76,0.4); }
+  .upcoming-inner { text-align: center; padding: 40px; }
+  .upcoming-icon {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px; color: rgba(201,168,76,0.1);
+    line-height: 1; margin-bottom: 20px;
+  }
+  .upcoming-label {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+  .upcoming-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 0.04em;
+    color: rgba(245,242,237,0.3); margin-bottom: 12px;
+  }
+  .upcoming-desc { font-size: 13px; color: var(--muted); max-width: 260px; margin: 0 auto 24px; line-height: 1.6; }
+
+  /* NOTIFY FORM */
+  .notify-form { display: flex; gap: 0; max-width: 320px; margin: 0 auto; }
+  .notify-input {
+    flex: 1; padding: 12px 16px;
+    background: transparent;
+    border: 0.5px solid var(--border);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .notify-input::placeholder { color: var(--muted); }
+  .notify-input:focus { border-color: var(--gold); }
+  .notify-btn {
+    padding: 12px 16px;
+    background: var(--gold); color: var(--black);
+    border: none; cursor: pointer;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .notify-btn:hover { background: var(--gold-light); }
+  .notify-success {
+    display: none; font-size: 12px; color: var(--gold);
+    letter-spacing: 0.08em; margin-top: 8px; text-align: center;
+  }
+
+  /* APPLY SECTION */
+  .apply-section {
+    padding: 96px 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center; border-bottom: 0.5px solid var(--border);
+  }
+  .apply-text .label {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px;
+  }
+  .apply-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 52px);
+    line-height: 1; margin-bottom: 20px;
+  }
+  .apply-text h2 em { color: var(--gold); font-style: normal; }
+  .apply-text p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 24px; }
+  .apply-criteria { list-style: none; margin-bottom: 32px; }
+  .apply-criteria li {
+    padding: 12px 0; border-bottom: 0.5px solid var(--border);
+    font-size: 13px; color: var(--muted);
+    display: flex; gap: 12px;
+  }
+  .apply-criteria li::before { content: "→"; color: var(--gold); flex-shrink: 0; }
+  .apply-form-card {
+    padding: 40px 36px;
+    border: 0.5px solid var(--border);
+    background: rgba(201,168,76,0.02);
+  }
+  .apply-form-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; letter-spacing: 0.04em;
+    margin-bottom: 24px; color: var(--white);
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block; font-size: 10px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 12px 14px;
+    background: transparent;
+    border: 0.5px solid var(--border);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: var(--black); }
+  .form-group textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: var(--muted); }
+  .form-submit {
+    width: 100%; padding: 14px;
+    background: var(--gold); color: var(--black);
+    border: none; cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 0.1em;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .form-note { font-size: 11px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.5; }
+
+  /* FOOTER */
+  .footer-bar {
+    padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 0.5px solid var(--border);
+    font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+  }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero, .issues-section, .apply-section { padding-left: 20px; padding-right: 20px; }
+    .mission { padding: 40px 20px; grid-template-columns: 1fr; gap: 16px; }
+    .issues-grid { grid-template-columns: 1fr; }
+    .apply-section { grid-template-columns: 1fr; gap: 40px; }
+    .footer-bar { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="wordmark">Shade Deep</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#services">Services</a>
+    <a href="magazine.html" class="nav-active">Magazine</a>
+    <a href="index.html#contact">Work with us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ticker">SHADE DEEP MAGAZINE &nbsp;&nbsp;&nbsp; SHADE DEEP MAGAZINE &nbsp;&nbsp;&nbsp; SHADE DEEP MAGAZINE &nbsp;&nbsp;&nbsp;</div>
+  <p class="hero-label">Shade Deep Magazine</p>
+  <h1 class="hero-headline">Stories From the <em>Edge</em></h1>
+  <p class="hero-sub">A magazine for disruptors in art, culture, and commerce. We tell the stories of the people building something real — before the world catches up.</p>
+  <div class="hero-cta-row">
+    <a href="#issues" class="btn-primary">Read the issues</a>
+    <a href="#apply" class="btn-ghost">Apply to be featured</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</div>
+
+<!-- MISSION STRIP -->
+<div class="mission">
+  <p class="mission-label">Our editorial stance</p>
+  <p class="mission-text">We don't feature the <em>loudest</em> voices.<br>We feature the <em>most interesting</em> ones.</p>
+</div>
+
+<!-- ISSUES -->
+<section class="issues-section" id="issues">
+  <div class="section-header">
+    <div>
+      <p class="section-label">The archive</p>
+      <h2 class="section-heading">The Issues</h2>
+    </div>
+  </div>
+
+  <div class="issues-grid">
+
+    <!-- ISSUE 01 — update href to your actual PDF path -->
+    <div class="issue-card">
+      <div class="issue-cover">
+        <div class="cover-art cover-art-1"></div>
+        <div class="cover-mag-title">SHADE<br>DEEP</div>
+        <div class="cover-issue-num">Issue 001</div>
+        <div class="cover-center-text">
+          <p class="cover-theme">THE ONES<br>WHO MOVE<br>FIRST</p>
+          <p class="cover-feature-name">Pioneers &amp; Originals</p>
+        </div>
+        <div class="issue-cover-overlay"></div>
+        <a href="issue-001.pdf" target="_blank" class="issue-read-btn">Read Issue →</a>
+      </div>
+      <div class="issue-info">
+        <div class="issue-meta">
+          <span class="issue-num-tag">Issue 001</span>
+          <span class="issue-date">2024</span>
+        </div>
+        <h3 class="issue-title">The Ones Who Move First</h3>
+        <p class="issue-desc">Profiles of artists and entrepreneurs who stepped into uncharted territory before the path was clear. What they saw, what they built, and what came next.</p>
+        <div class="issue-tags">
+          <span class="issue-tag">Artists</span>
+          <span class="issue-tag">Entrepreneurs</span>
+          <span class="issue-tag">Originals</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ISSUE 02 — update href to your actual PDF path -->
+    <div class="issue-card">
+      <div class="issue-cover">
+        <div class="cover-art cover-art-2"></div>
+        <div class="cover-mag-title">SHADE<br>DEEP</div>
+        <div class="cover-issue-num">Issue 002</div>
+        <div class="cover-center-text">
+          <p class="cover-theme">BUILT<br>FROM<br>NOTHING</p>
+          <p class="cover-feature-name">Builders &amp; Disruptors</p>
+        </div>
+        <div class="issue-cover-overlay"></div>
+        <a href="issue-002.pdf" target="_blank" class="issue-read-btn">Read Issue →</a>
+      </div>
+      <div class="issue-info">
+        <div class="issue-meta">
+          <span class="issue-num-tag">Issue 002</span>
+          <span class="issue-date">2025</span>
+        </div>
+        <h3 class="issue-title">Built From Nothing</h3>
+        <p class="issue-desc">The second chapter. Stories of people who turned a singular vision into something tangible — with no blueprint, no guarantee, and no plan B.</p>
+        <div class="issue-tags">
+          <span class="issue-tag">Founders</span>
+          <span class="issue-tag">Creatives</span>
+          <span class="issue-tag">Culture</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMING SOON -->
+  <div style="margin-top: 2px;">
+    <div class="issue-card-upcoming">
+      <div class="upcoming-inner">
+        <div class="upcoming-icon">003</div>
+        <p class="upcoming-label">Coming next</p>
+        <h3 class="upcoming-title">Issue 003 — In Progress</h3>
+        <p class="upcoming-desc">The next issue is being built. Get notified when it drops — and find out how to be part of it.</p>
+        <div class="notify-form">
+          <input type="email" class="notify-input" placeholder="Your email" id="notify-email">
+          <button class="notify-btn" onclick="handleNotify()">Notify me</button>
+        </div>
+        <p class="notify-success" id="notify-success">You're on the list. We'll be in touch.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- APPLY SECTION -->
+<section class="apply-section" id="apply">
+  <div class="apply-text">
+    <p class="label">Get featured</p>
+    <h2>Your Story <em>Deserves</em> to Be Told</h2>
+    <p>Shade Deep Magazine features artists and entrepreneurs who are doing something genuinely worth talking about. Not the most famous — the most interesting.</p>
+    <ul class="apply-criteria">
+      <li>You're building something original in your space</li>
+      <li>You have a story that goes beyond your resume</li>
+      <li>You're an artist, creative, founder, or entrepreneur</li>
+      <li>You're ready to be seen by a community that pays attention</li>
+    </ul>
+    <p style="font-size:13px;">Features include editorial photography direction, a full written profile, and distribution across all Shade Deep platforms — TikTok, Instagram, and YouTube.</p>
+  </div>
+
+  <div class="apply-form-card">
+    <h3>Apply to be featured</h3>
+    <!-- 
+      TO CONNECT THIS FORM:
+      1. Go to formspree.io and create a free account
+      2. Create a new form and copy your endpoint URL
+      3. Replace "YOUR_FORMSPREE_ID" below with your actual ID
+      e.g. action="https://formspree.io/f/abcdefgh"
+    -->
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="apply-form">
+      <div class="form-group">
+        <label>Your name</label>
+        <input type="text" name="name" placeholder="Full name" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>What do you do?</label>
+        <select name="type" required>
+          <option value="" disabled selected>Select one</option>
+          <option value="artist">Artist / Musician</option>
+          <option value="visual">Visual Artist / Designer</option>
+          <option value="entrepreneur">Entrepreneur / Founder</option>
+          <option value="realtor">Realtor / Investor</option>
+          <option value="other">Other creative</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Instagram or website</label>
+        <input type="text" name="link" placeholder="@handle or url">
+      </div>
+      <div class="form-group">
+        <label>Tell us what you're building</label>
+        <textarea name="message" placeholder="What's your story? What are you working on?" required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Submit Application</button>
+      <p class="form-note">We review every application personally. You'll hear back within 5–7 days.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <a href="index.html" class="wordmark" style="font-size:16px;">Shade Deep</a>
+  <span>© 2025 Shade Deep Media</span>
+  <div class="footer-links">
+    <a href="https://www.tiktok.com/@shadedeep_">TikTok</a>
+    <a href="https://www.instagram.com/shadedeepmedia">Instagram</a>
+    <a href="https://youtube.com/@estheratere">YouTube</a>
+  </div>
+</div>
+
+<script>
+  function handleNotify() {
+    const email = document.getElementById('notify-email').value;
+    if (!email || !email.includes('@')) return;
+    document.querySelector('.notify-form').style.display = 'none';
+    document.getElementById('notify-success').style.display = 'block';
+    // To actually capture emails, connect this to Formspree or Mailchimp
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
